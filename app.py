@@ -17,12 +17,13 @@ def catch_all(path):
         data = None
 
     request_info = {
-        'timestamp': strftime('%Y-%b-%d %H:%M:%S'),
-        'path': path,
-        'query': request.query_string.decode(),
-        'method': request.method,
-        'headers': dict(request.headers),
-        'data': data
+        "content-type": request.content_type,
+        "data": data,
+        "headers": dict(request.headers),
+        "method": request.method,
+        "path": path,
+        "query": request.query_string.decode(),
+        "timestamp": strftime("%Y-%b-%d %H:%M:%S"),
     }
     app.logger.info(str(request_info))
     return request_info
