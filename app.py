@@ -1,7 +1,9 @@
 """Flask App Project."""
+from collections import OrderedDict
 import logging
 from time import strftime
 
+import colors
 from flask import Flask, request
 
 app = Flask(__name__)
@@ -16,17 +18,25 @@ def catch_all(path):
     else:
         data = None
 
-    request_info = {
-        "content-type": request.content_type,
-        "data": data,
-        "headers": dict(request.headers),
-        "method": request.method,
-        "path": path,
-        "query": request.query_string.decode(),
-        "timestamp": strftime("%Y-%b-%d %H:%M:%S"),
-    }
-    app.logger.info(str(request_info))
-    return request_info
+    ip = request.headers.get('X-Forwarded-For', request.remote_addr)
+
+    log_params = [
+        ('path', request.path, 'blue'),
+        ('method', request.method, 'blue'),
+        ('query', request.query_string.decode(), 'blue'),
+        ('ip', ip, 'red'),
+        ('data', str(data), 'white'),
+        ('headers', dict(request.headers), 'yellow'),
+    ]
+
+    parts = []
+    for name, value, color in log_params:
+        part = colors.color("{}: {}\n\t".format(name, value), fg=color)
+        parts.append(part)
+
+    app.logger.info(" ".join(parts))
+
+    return {key: value for key, value, color in log_params}
 
 
 if __name__ == '__main__':
