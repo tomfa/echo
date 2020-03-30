@@ -1,8 +1,11 @@
 """Flask App Project."""
+import logging
 from time import strftime
 
 from flask import Flask, request
+
 app = Flask(__name__)
+app.logger.setLevel(logging.INFO)
 
 
 @app.route('/', defaults={'path': ''}, methods=['GET', 'POST'])
@@ -21,7 +24,7 @@ def catch_all(path):
         'headers': dict(request.headers),
         'data': data
     }
-    app.logger.error(str(request_info))
+    app.logger.info(str(request_info))
     return request_info
 
 
