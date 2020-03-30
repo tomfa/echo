@@ -1,0 +1,6 @@
+{
+  "name": "Flask Echo",
+  "description": "An app that will reply with metadata about the HTTP request.",
+  "repository": "https://github.com/tomfa/echo",
+  "keywords": ["flask", "python", "logging"]
+}
