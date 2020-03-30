@@ -2,7 +2,8 @@
 
 Simple application that returns and logs data about the request it receives.
 
-
+![Example GET request with Firefox](./img/example-get.png)
+![Example POST request with Postman](./img/example-post.png)
 
 ## Problem
 
